@@ -26,7 +26,7 @@ public class SoundActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Vibrator vib = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                vib.vibrate(2000);
+                vib.vibrate(3000);
             }
         });
         //효과음 버튼의 클릭 이벤트 처리
