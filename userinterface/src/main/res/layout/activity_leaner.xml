@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LeanerActivity"
+    android:orientation="horizontal">
+    <!--width에 match_parent가 오게 되면 첫번째 것 이상으로 뒤에 더 올 수 없음-->
+    <!--화면 정중앙-->
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="텍스트 뷰"
+        android:layout_gravity="center"/>-->
+    <!--1:1:1 비율 설정-->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="텍스트 뷰1"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="텍스트 뷰2"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="텍스트 뷰3"
+        android:layout_weight="1"/>
+</LinearLayout>
