@@ -1,0 +1,4 @@
+include ':eventhandling'
+include ':userinterface'
+include ':app'
+rootProject.name = "androidjava"
