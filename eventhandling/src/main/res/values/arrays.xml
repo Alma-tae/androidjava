@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="marvel">
+        <item>IronMan</item>
+        <item>Caption America</item>
+        <item>Thor</item>
+        <item>Black Widow</item>
+        <item>Hulk</item>
+        <item>Ant Man</item>
+        <item>Spider Man</item>
+        <item>WarMachine</item>
+        <item>Palcon</item>
+        <item>Doctor Strange</item>
+        <item>Wanda</item>
+        <item>Vision</item>
+        <item>Black Panther</item>
+        <item>Loki</item>
+    </string-array>
+
+</resources>
