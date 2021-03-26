@@ -26,7 +26,8 @@ public class WebViewActivity extends AppCompatActivity {
         btnLoadHtml.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //출력하는 URL에 자바스크립트 코드가 있는 경우, WebView의 설정을 변경해야 함
+                //출력하는 URL에 자바스크립트 코드가 있는 경우
+                // WebView의 설정을 변경해야 함
                 WebSettings set = webView.getSettings();
                 set.setJavaScriptEnabled(true);
                 webView.loadUrl("file:///android_asset/test.html");
