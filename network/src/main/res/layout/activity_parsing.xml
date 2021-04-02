@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ParsingActivity">
+
+    <Button
+        android:id="@+id/btnHTML"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HTML Parsing" />
+
+    <Button
+        android:id="@+id/btnXML"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XML Parsing" />
+
+    <Button
+        android:id="@+id/btnJSON"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="JSON Parsing" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+</LinearLayout>
