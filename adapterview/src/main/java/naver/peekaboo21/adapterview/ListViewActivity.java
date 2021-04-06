@@ -1,0 +1,152 @@
+package naver.peekaboo21.adapterview;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.util.SparseBooleanArray;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+
+public class ListViewActivity extends AppCompatActivity {
+    ListView listview;
+    ArrayList<String> list;
+    ArrayAdapter<String> adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_view);
+
+        //Listview 출력 관련 초기화 작업
+        listview = (ListView) findViewById(R.id.listview);
+
+        list = new ArrayList<>();
+        list.add("Ioc");
+        list.add("DI");
+        list.add("AOP");
+
+        //android.R로 시작하면 안드로이드에서 제공하는 리소스
+        //R로 시작하면 사용자가 삽입한 리소스스
+        //adapter = new ArrayAdapter<>(ListViewActivity.this, android.R.layout.simple_list_item_1, list);
+
+        //라디오 버튼을 옆에 배치하는 모양으로 설정
+        //adapter = new ArrayAdapter<>(ListViewActivity.this, android.R.layout.simple_list_item_single_choice, list);
+
+        //체크 박스 버튼을 옆에 배치하는 모양으로 설정
+        adapter = new ArrayAdapter<>(ListViewActivity.this, android.R.layout.simple_list_item_multiple_choice, list);
+
+        //ListView에 Adapter 설정
+        listview.setAdapter(adapter);
+
+        //구분선 설정
+        listview.setDivider(new ColorDrawable(Color.GREEN));
+        listview.setDividerHeight(4);
+
+        //listview의 선택모드 설정(라디오버튼)
+        //listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        //체크박스
+        listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        //listView에서 항목을 클릭했을 때 처리
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            // 첫번째 매개변수는 listview
+            // 두번째 매개변수는 클릭한 항목 뷰
+            // 세번째 매개변수는 클릭한 항목 뷰의 인덱스
+            // 네번째 매개변수는 항목 뷰의 아이디. 일반적으로는 일련번호.
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = list.get(position);
+                Snackbar.make(getWindow().getDecorView().getRootView(), item, Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        Button btnInsert = (Button) findViewById(R.id.btnInsert);
+        btnInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //입력한 내용 가져오기
+                EditText newItem = (EditText) findViewById(R.id.newItem);
+                String item = newItem.getText().toString().trim();
+                //전송하기 전에 유효성 검사를 수행 - null 체크, 중복 검사 등등
+                if (item.length() <= 0) {
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "아이템은 필수 입력입니다.", Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+                //list의 데이터를 순회하면서 모두 대문자로 변경, 비교해서 중복 검사
+                for (String spring : list) {
+                    if (spring.toUpperCase().equals(item.toUpperCase())) {
+                        Snackbar.make(getWindow().getDecorView().getRootView(), "아이템은 중복될 수 없습니다", Snackbar.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                //list에 삽입
+                list.add(item);
+                //listview 업데이트
+                adapter.notifyDataSetChanged();
+                newItem.setText("");
+                Snackbar.make(getWindow().getDecorView().getRootView(), "아이템이 정상적으로 추가되었습니다.", Snackbar.LENGTH_LONG).show();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(newItem.getWindowToken(), 0);
+
+            }
+        });
+
+        Button btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //하나를 선택할 수 있을 때 삭제 처리
+                /*
+                //작업을 수행할 데이터 유효성 검사
+                //선택된 항목의 인덱스를 찾아오기
+                int pos = listview.getCheckedItemPosition();
+                //인덱스는 데이터 범위 내의 인덱스여야 함
+                if(pos < 0 || pos >= list.size()){
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "아이템이 선택되지 않아서 삭제 할 수 없습니다.", Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
+                //작업 수행
+                //데이터 삭제하고 다시 출력하고 선택된 항목 해제
+                list.remove(pos);
+                adapter.notifyDataSetChanged();
+                listview.clearChoices();
+                */
+
+                //여러 개 선택해서 삭제
+                //선택 항목 관련 정보를 가져옴
+                SparseBooleanArray sb = listview.getCheckedItemPositions();
+                //유효성 검사
+                if(sb.size() <= 0){
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "리스트 뷰에 데이터가 없습니다.", Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+                //배열 순회
+                //배열을 순회하면서 true이면 삭제
+                //앞에서부터 진행하면 안 되고, 뒤에서부터 진행
+                for (int i=listview.getCount()-1; i>=0; i--){
+                    if(sb.get(i)==true){
+                        list.remove(i);
+                    }
+                }
+                listview.clearChoices();
+                adapter.notifyDataSetChanged();
+
+                //수행 결과를 출력
+                Snackbar.make(getWindow().getDecorView().getRootView(), "아이템이 정상적으로 삭제되었습니다.", Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+}
