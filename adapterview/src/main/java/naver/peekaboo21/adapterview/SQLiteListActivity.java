@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,9 +40,16 @@ public class SQLiteListActivity extends AppCompatActivity {
         
         //SimpleAdapter 생성
         //네번째 매개면수가 Map에서 출력할 키의 배열
-        SimpleAdapter simpleAdapter = new SimpleAdapter(SQLiteListActivity.this, simpleData, 
+        /*SimpleAdapter simpleAdapter = new SimpleAdapter(SQLiteListActivity.this, simpleData,
                 android.R.layout.simple_list_item_2, new String[]{"name", "content"}, new int[]{android.R.id.text1, android.R.id.text2} );
 
         simpleListView.setAdapter(simpleAdapter);
+        */
+
+        //CursorAdapter사용 - Map의 List를 만들 필요가 없음
+        CursorAdapter cursorAdapter = new SimpleCursorAdapter(SQLiteListActivity.this, android.R.layout.simple_list_item_2,
+                cursor, new String[]{"name", "content"}, new int[]{android.R.id.text1, android.R.id.text2});
+
+        simpleListView.setAdapter(cursorAdapter);
     }
 }
