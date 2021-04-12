@@ -26,7 +26,8 @@ public class VideoPlayActivity extends AppCompatActivity {
         videoView.setMediaController(mc);
 
         //비디오 파일 경로
-        String path = "android.resources://"+getPackageName()+"/"+R.raw.trailer;
+        String path = "android.resource://" + getPackageName()
+                +"/" + R.raw.trailer;
         videoView.setVideoURI(Uri.parse(path));
         videoView.requestFocus();
 
